@@ -1,1 +1,1 @@
-This repo contains my work folders of the assigned projects by alx
+This repo contains my work folders for the different assigned projects by ALX.
