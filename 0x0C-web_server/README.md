@@ -1,1 +1,1 @@
-estabilishes and interact with a web server.
+install and configure a Nginx web server.
