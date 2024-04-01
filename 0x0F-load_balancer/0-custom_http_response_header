@@ -9,6 +9,7 @@ sudo mv index.html /var/www/html
 
 echo "Ceci n'est pas une page" > error_404.html
 sudo mv error_404.html /var/www/html
+
 echo "server {
    listen 80 default_server;
    listen [::]:80 default_server;
@@ -24,5 +25,6 @@ echo "server {
       internal;
    }
 }" > default
+
 sudo mv -f default /etc/nginx/sites-available/default
-sudo service nginx restart
+sudo service nginx start
