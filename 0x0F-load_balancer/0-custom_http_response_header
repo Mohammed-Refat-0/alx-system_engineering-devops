@@ -1,30 +1,10 @@
 #!/usr/bin/env bash
 # Configures a ngnix server with a custom HTTP header response
 
-sudo apt-get update
-sudo apt-get install -y nginx 
-echo "Hello World!" > index.html
-sudo mv index.html /var/www/html
-
-
-echo "Ceci n'est pas une page" > error_404.html
-sudo mv error_404.html /var/www/html
-
-echo "server {
-   listen 80 default_server;
-   add_header X-Served-By $hostname;
-   listen [::]:80 default_server;
-   
-   root /var/www/html;
-   index index.html;
-   location /redirect_me {
-      return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-   }
-   error_page 404 /error_404.html;
-   location = /error_404.html{
-      internal;
-   }
-}" > default
-
-sudo mv -f default /etc/nginx/sites-available/default
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+echo 'Hello World!' > /var/www/html/index.html
+sudo sed -i '/listen 80 default_server;/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+sudo sed -i "/listen 80 default_server;/a add_header X-Served-By $hostname;" /etc/nginx/sites-available/default
 sudo service nginx start
