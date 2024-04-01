@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Configures a ngnix server with a custom HTTP header response
+
 sudo apt-get update
 sudo apt-get install -y nginx 
 echo "Hello World!" > index.html
@@ -11,7 +12,6 @@ sudo mv error_404.html /var/www/html
 echo "server {
    listen 80 default_server;
    listen [::]:80 default_server;
-   add_header X-Served-By $hostname;
    
    root /var/www/html;
    index index.html ;
@@ -25,4 +25,5 @@ echo "server {
 }" > default
 
 sudo mv -f default /etc/nginx/sites-available/default
+sudo sed -i '/listen 80 default_server;/a add_header X-Served-By $hostname;' /etc/nginx/sites-available/default
 sudo service nginx restart
