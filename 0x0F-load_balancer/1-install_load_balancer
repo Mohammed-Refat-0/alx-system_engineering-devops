@@ -10,16 +10,17 @@ sudo apt-get install -y haproxy=2.0.\*
 echo "ENABLED=1"  > haproxy
 sudo mv -f haproxy /etc/default/haproxy
 
-echo "
-   listen load_balancer
-   bind *:80
-   mode http
-   balance roundrobin
-   option httpclose
-   option forwardfor
-   server 506937-web-01 54.208.41.165:80 check
-   server 506937-web-02 54.158.79.114:80 check
-" > haproxy.cfg
-sudo mv -f haproxy.cfg /etc/haproxy/haproxy.cfg
+echo "defaults
+    mode http
 
+frontend myfrontend
+    bind *:80
+    default_backend myservers
+
+backend myservers
+    balance roundrobin
+    server 506937-web-01 54.208.41.165:80 check
+    server 506937-web-02 54.158.79.114:80 check" > haproxy.cfg
+
+sudo mv -f haproxy.cfg /etc/haproxy/haproxy.cfg
 sudo service haproxy start
