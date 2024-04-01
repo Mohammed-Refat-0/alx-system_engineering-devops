@@ -1,16 +1,27 @@
 #!/usr/bin/env bash
 #Configure a Nginx server with a /redirect_me and custom 404 page
 
-sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
-echo "Hello World!" >> /var/www/html/index.html
-echo "Ceci n'est pas une page" >> /var/www/html/error404.html
+sudo apt-get update
+sudo apt-get install -y nginx 
+echo "Hello World!" > index.html
+sudo mv index.html /var/www/html
 
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
 
-sudo sed -i '37i\rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
-
-sudo sed -i '38i\error_page 404 /error404.html;' /etc/nginx/sites-available/default
-
+echo "Ceci n'est pas une page" > error_404.html
+sudo mv error_404.html /var/www/html
+echo "server {
+   listen 80 default_server;
+   listen [::]:80 default_server;
+   
+   root /var/www/html;
+   index index.html;
+   location /redirect_me {
+      return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+   }
+   error_page 404 /error_404.html;
+   location = /error_404.html{
+      internal;
+   }
+}" > default
+sudo mv -f default /etc/nginx/sites-available/default
 sudo service nginx restart
