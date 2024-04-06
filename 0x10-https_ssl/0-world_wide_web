@@ -11,7 +11,7 @@ then
   information "$1" "www"
   information "$1" "lb-01"
   information "$1" "web-01"
-  domain_information "$1" "web-02"
+  information "$1" "web-02"
 elif [ "$#" == 2 ]
 then
   information "$1" "$2"
