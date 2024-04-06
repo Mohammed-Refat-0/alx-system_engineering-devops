@@ -1,0 +1,11 @@
+
+   listen load_balancer
+   bind *:80
+   bind *:443 ssl crt /etc/haproxy/certs/www.mohammedshehata.tech.pem
+   redirect scheme https code 301 if !{ ssl_fc }
+   mode http
+   balance roundrobin
+   option httpclose
+   option forwardfor
+   server 506937-web-01 54.208.41.165:80 check
+   server 506937-web-02 54.158.79.114:80 check
