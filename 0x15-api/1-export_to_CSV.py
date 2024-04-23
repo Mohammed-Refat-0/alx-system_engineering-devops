@@ -3,9 +3,9 @@
 to returns information about thier TODO list progress,
 and export it in csv format."""
 
+import csv
 import requests
 import sys
-import csv
 
 if __name__ == "__main__":
 
@@ -20,4 +20,4 @@ if __name__ == "__main__":
 
         for i in todo:
             writer.writerow(
-                [id, user.get("name"), i.get("completed"), i.get("title")])
+                [id, user.get("username"), i.get("completed"), i.get("title")])
