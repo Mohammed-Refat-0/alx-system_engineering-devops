@@ -1,1 +1,1 @@
-this repo contains .py scripts to interact with reddit's api
+this repo contains python scripts to interact with reddit's api

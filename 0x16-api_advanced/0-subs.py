@@ -1,17 +1,19 @@
 #!/usr/bin/python3
-"""task 0 function"""
+""" the number of subscribers for a given subreddit.
+If an invalid subreddit is given, return 0.
+"""
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """Queries the Reddit API and returns the number of subscribers
-    to a  subreddit"""
+    """function that queries the Reddit API
+    and returns the number of subscribers"""
 
-    info = requests.get("https://www.reddit.com/r/{}/about.json"
-                        .format(subreddit),
-                        headers={"User-Agent": "My-User-Agent"},
-                        allow_redirects=False)
-    if info.status_code >= 300:
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    response = requests.get(url, headers={"User-Agent": "My-User-Agent"},
+                            allow_redirects=False)
+    if response.status_code >= 300 or response.status_code >= 400:
         return 0
+    else:
+        return response.json().get("data").get("subscribers")
 
-    return info.json().get("data").get("subscribers")
