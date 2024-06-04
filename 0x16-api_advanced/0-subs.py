@@ -2,7 +2,6 @@
 """ the number of subscribers for a given subreddit.
 If an invalid subreddit is given, return 0.
 """
-import json
 import requests
 
 
